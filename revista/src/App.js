@@ -3,6 +3,8 @@ import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import { Foot } from './Components/Footer';
+import Navbar from './Components/Navbar';
 
 const config = {
   initialColorMode: 'dark',
@@ -18,11 +20,14 @@ function App(props)  {
     <ChakraProvider>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <BrowserRouter>
+            <Navbar />
+
               <Routes >
                   <Route path="/" element={<LandingPage />} />
               </Routes>
             </BrowserRouter>
     </ChakraProvider>
+    <Foot />
 
    </>
   );

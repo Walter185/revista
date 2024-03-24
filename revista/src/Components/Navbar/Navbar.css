@@ -1,0 +1,42 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: orange;
+    color: #fff;
+    max-height: 110px;
+    text-decoration: none;
+    position: sticky;
+    top: 0;
+    z-index: 1;  
+  }
+  
+  .navbar__logo img {
+    width: 8em; 
+    height: auto;
+    margin-left: 20px;
+    padding-top:-10px;
+  }
+  
+  .navbar__actions{
+    margin-right:20px;
+    font-weight: 400;
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  .navbar__actions button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  @media screen and (max-width:800px){
+    
+    .navbar__logo img {
+    width: 5em;
+    margin-top: -5px;
+    }
+  }
