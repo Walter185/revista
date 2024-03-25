@@ -69,39 +69,39 @@ const Navbar = () => {
       <div className="navbar__search">
       </div>
       <div>
-          <Ul className={isOpen ? "open" : ""}>
+        <Ul className={isOpen ? "open" : ""}>
           <Li>
-              <Navlink to="/" name="Home" />
-            </Li>
+            <Navlink to="/" name="Home" />
+          </Li>
           <Li>
-              {currentUser && <Navlink to="/show" name="Adm" />}
-            </Li>
-            <Li>
-              {!currentUser && <Navlink to="/login" name="Ingresar" />}
-              {currentUser && (
-                <Navlink
-                  to="/"
-                  name="Salir"
-                  onClick={async (e) => {
-                    await logout();
-                  }}
-                />
-              )}
-            </Li>
-            <Li>
-              <IconButton
-                variant="ghost"
-                icon={useColorModeValue(<FaSun />, <FaMoon />)}
-                onClick={toggleColorMode}
-                color={"white"}
-                aria-label="toggle-dark-mode"
+            {currentUser && <Navlink to="/show" name="Adm" />}
+          </Li>
+          <Li>
+            {!currentUser && <Navlink to="/login" name="Ingresar" />}
+            {currentUser && (
+              <Navlink
+                to="/"
+                name="Salir"
+                onClick={async (e) => {
+                  await logout();
+                }}
               />
-            </Li>
-            </Ul>
-            <Pan>
-            <Hamburger name="Hamburguesa" toggled={isOpen} toggle={setIsOpen} duration={0.8} color="coral" />
-          </Pan>
-            </div>
+            )}
+          </Li>
+          <Li>
+            <IconButton
+              variant="ghost"
+              icon={useColorModeValue(<FaSun />, <FaMoon />)}
+              onClick={toggleColorMode}
+              color={"white"}
+              aria-label="toggle-dark-mode"
+            />
+          </Li>
+        </Ul>
+        <Pan>
+          <Hamburger name="Hamburguesa" toggled={isOpen} toggle={setIsOpen} duration={0.8} color="coral" />
+        </Pan>
+      </div>
     </nav>
   );
 };

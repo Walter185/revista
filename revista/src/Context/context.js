@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from '../Firebase/firebase';
 import {
     createUserWithEmailAndPassword,
@@ -6,7 +6,7 @@ import {
     // sendPasswordResetEmail,
     onAuthStateChanged,
     signInWithPopup,
-    GoogleAuthProvider,
+    // GoogleAuthProvider,
     signOut,
     // confirmPasswordReset,
   } from 'firebase/auth';
@@ -64,10 +64,10 @@ function CartProvider(props) {
         return signOut(auth)
       }
     
-      function signInWithGoogle() {
-        const provider = new GoogleAuthProvider()
-        return signInWithPopup(auth, provider)
-      }
+      // function signInWithGoogle() {
+      //   const provider = new GoogleAuthProvider()
+      //   return signInWithPopup(auth, provider)
+      // }
     
     useEffect(() => {
         (cart.length > 0) ? localStorage.setItem('cart', JSON.stringify(cart)) : localStorage.clear();
@@ -123,7 +123,7 @@ function CartProvider(props) {
         <cartContext.Provider value={{ cart, 
             addToCart,
             currentUser,
-            signInWithGoogle,
+            // signInWithGoogle,
             login,
             register,
             logout,
