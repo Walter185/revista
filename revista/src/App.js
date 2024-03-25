@@ -7,6 +7,11 @@ import { Foot } from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Loginpage from './Components/Login';
 import { CartProvider } from './Context/context';
+import Show from './Components/Admin/Show';
+import Edit from './Components/Admin/Edit';
+import Create from './Components/Admin/Create';
+import RequireAuth from './Components/Login/RequireAuth';
+
 
 const config = {
   initialColorMode: 'dark',
@@ -28,6 +33,9 @@ function App(props)  {
               <Routes >
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<Loginpage />} />
+                  <Route path="/show" element={<RequireAuth><Show /></RequireAuth>} />
+                  <Route path="/create" element={<RequireAuth><Create /></RequireAuth>} />
+                  <Route path="/edit/:id" element={<RequireAuth><Edit /></RequireAuth>} />
 
               </Routes>
             </BrowserRouter>
