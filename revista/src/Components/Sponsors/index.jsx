@@ -6,16 +6,13 @@ import { getSponsors } from "../../Firebase/firebase";
 
 const Img = styled.img`
 width: 100%;
-max-height: 350px;
+max-height: 600px;
 object-fit: fill;
 `;
 
 const Section = styled.section`
-  padding-top: 10px;
-  // margin-top: 30px;
+  padding-top: 1px;
   background-color: #343a40;
-  padding-bottom: 60px;
-
   `;
 
   const Title = styled.h4`
@@ -27,11 +24,18 @@ const Section = styled.section`
 
   const Contenedor = styled.div`
   position: relative;
-  margin: 50px auto 20px auto;
-  width: 600px;
-  height: 300px;
-  `;
+  margin: 50px auto 0.1px auto;
+  height: 650px;
+  width: 45% ;
 
+  @media screen and (max-width:1000px){
+    width: 75%;
+  }
+  @media screen and (max-width:600px){
+    width: 80%;
+
+  }
+  `;
 export default function CarrouselPrincipal() {
   const [sponsors, setSponsors] = useState([]);
 
