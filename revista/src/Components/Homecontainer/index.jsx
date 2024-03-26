@@ -1,8 +1,12 @@
+import Revistas from "../Revistas";
+import CarrouselPrincipal from "../Sponsors";
+
 export default function HomeContainer() {
 
     return (
         <>
-        <div>home</div>
+        <Revistas />
+        <CarrouselPrincipal />
         </>
     )}
     

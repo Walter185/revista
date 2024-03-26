@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs, getDoc, doc, addDoc, query, where } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { deleteObject, ref, getStorage, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -19,7 +18,6 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
-const analytics = getAnalytics(app);
 
 
 export const DeleteFile = (imageRef) => {
@@ -29,7 +27,6 @@ export const DeleteFile = (imageRef) => {
 
 export const uploadFile = (file, imageRef, setProgress, setRemoteImg) => {
     const storageRef = ref(storage, imageRef);
-    // 'file' comes from the Blob or File API
     const upload = uploadBytesResumable(storageRef, file);
     upload.on('state_changed',
         (snapshot) => {
@@ -61,16 +58,16 @@ export async function getAllProducts(){
     return products;
 }
 
-export async function getAllVideos(){
-    const videosRef = collection(db, "videos");
-    const snapshot = await getDocs(videosRef);
+export async function getAllSponsors(){
+    const sponsorsRef = collection(db, "sponsor");
+    const snapshot = await getDocs(sponsorsRef);
 
-    const videos = snapshot.docs.map(element => {
-        let video = element.data();
-        video.id = element.id;
-        return video;
+    const sponsors = snapshot.docs.map(element => {
+        let sponsor = element.data();
+        sponsor.id = element.id;
+        return sponsor;
     });
-    return videos;
+    return sponsors;
 }
 
 export async function getAllCategorias(){
@@ -99,9 +96,9 @@ export async function getProductsByCategory(categoryid){
     return products;
 }
 
-export async function getUsados() {
-    const productsRef = collection(db, "products");
-    const qry = query(productsRef, where("category", "==", "usado")); // Filtrar por categoria "usados"
+export async function getRevistas() {
+    const productsRef = collection(db, "revistas");
+    const qry = query(productsRef, where("category", "==", "revista")); // Filtrar por categoria "usados"
     const snapshot = await getDocs(qry);
   
     const products = snapshot.docs.map((element) => {
@@ -113,6 +110,19 @@ export async function getUsados() {
     return products;
   }
 
+  export async function getSponsors() {
+    const productsRef = collection(db, "revistas");
+    const qry = query(productsRef, where("category", "==", "sponsor")); // Filtrar por categoria "usados"
+    const snapshot = await getDocs(qry);
+  
+    const products = snapshot.docs.map((element) => {
+      const product = element.data();
+      product.id = element.id;
+      return product;
+    });
+  
+    return products;
+  }
 //Como firebase solo tiene soporte para buscar por coincidencia 100%, decidi obtener toda la lista de productos y luego filtrar, aunque no sea lo mas eficiente.
 export async function getProductsByName(searchid){
     const productsRef = collection(db, "products");

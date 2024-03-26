@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import db from "../../Firebase/firebase";
+import db, { getRevistas } from "../../Firebase/firebase";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import styled from "styled-components";
@@ -23,9 +23,9 @@ const MySwal = withReactContent(Swal)
 
 const Show = () => {
     const [products, SetProducts] = useState([]);
-    const productsCollection = collection(db, "products")
+    const productsCollection = collection(db, "revistas")
 
-    const getProducts = async () => {
+    const getRevistas = async () => {
         const data = await getDocs(productsCollection)
         SetProducts(
             data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -33,9 +33,9 @@ const Show = () => {
     }
 
     const deleteProduct = async (id) => {
-        const productDoc = doc(db, "products", id)
+        const productDoc = doc(db, "revistas", id)
         await deleteDoc(productDoc)
-        getProducts()
+        getRevistas()
     }
 
     const confirmDelete = (id) => {
@@ -61,7 +61,7 @@ const Show = () => {
     }
 
     useEffect(() => {
-        getProducts()
+        getRevistas()
     }, [])
 
     return (
@@ -80,28 +80,15 @@ const Show = () => {
                                 <TH>Nombre</TH>
                                 <TH>Descripcion</TH>
                                 <TH>Categoria</TH>
-                                {/* <TH>Detalle</TH>
-                            <TH>Extra</TH> */}
-                                <TH>Precio</TH>
-                                {/* <TH>Stock</TH> */}
-                                {/* <TH>Ubicacion</TH>
-                            <TH>Imagen</TH>
-                            <TH>Pdf</TH> */}
                                 <TH>E/B</TH>
                             </tr>
                         </thead>
                         <tbody>
                             {products.map((product) => (
                                 <tr key={product.id}>
-                                    <TD>{product.title}</TD>
+                                    <TD>{product.name}</TD>
                                     <TD>{product.description}</TD>
                                     <TD>{product.category}</TD>
-                                    {/* <TD>{product.detail}</TD>
-                                <TD>{product.extra}</TD> */}
-                                    <TD>{product.price}</TD>
-                                    {/* <TD>{product.location}</TD>
-                                <TD>{product.imgUrl}</TD>
-                                <TD>{product.pdf}</TD> */}
                                     <TD>
                                         <Link to={`/edit/${product.id}`} className="btn btn-light"><i className="fa-solid fa-pencil"></i>Editar</Link><span>   </span>
                                         <button onClick={() => { confirmDelete(product.id) }} className="btn btn-danger"><i className="fa-solid fa-trash"></i>Borrar</button>
@@ -117,4 +104,4 @@ const Show = () => {
     )
 }
 
-export default Show
+export default Show;

@@ -1,53 +1,102 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { collection, addDoc } from "firebase/firestore"
-import db from "../../Firebase/firebase"
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import db, { storage, DeleteFile } from "../../Firebase/firebase";
 
 const Create = () => {
-    const [title, setTitle] = useState("");
+    const [name, setName] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
-    const [img1, setImg1] = useState("");
-    const [img2, setImg2] = useState("");
-    const [price, setPrice] = useState(0);
+    const [imgUrl, setImgUrl] = useState("");
+    const [pdf, setPdf] = useState("");
     const navigate = useNavigate()
-    const productsCollection = collection(db, "products")
+    const productsCollection = collection(db, "revistas")
 
     const store = async (e) => {
         e.preventDefault()
-        await addDoc(productsCollection, {title: title, category: category,
-            description: description, img1: img1, img2: img2, price: price})
+        await addDoc(productsCollection, {
+            name: name, 
+            category: category,
+            description: description, 
+            imgUrl: imgUrl, 
+            pdf: pdf
+        })
         navigate("/show")
     }
+
+    const handleUploadPdf = async (e) => {
+        const file = e.target.files[0];
+        const storageRef = ref(storage, `pdfs/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on('state_changed',
+            null,
+            (error) => {
+                console.error('Error uploading PDF:', error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    // Update the state with the download URL
+                    setPdf(downloadURL);
+                });
+            }
+        );
+    };
+
+
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        const storageRef = ref(storage, `images/${file.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on('state_changed',
+            null,
+            (error) => {
+                console.error('Error uploading file:', error);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    setImgUrl(downloadURL);
+                });
+            }
+        );
+    };
+
+
+    const handleDeleteFile = async (fileURL) => {
+        try {
+            const imageRef = ref(storage, fileURL);
+            await DeleteFile(imageRef);
+            if (fileURL === imgUrl) {
+                setImgUrl("");
+            } else if (fileURL === pdf) {
+                setPdf("");
+            }
+        } catch (error) {
+            console.error("Error deleting image:", error);
+        }
+    };
+
     return (
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <h1>Crear Producto</h1>
+                    <h1>Crear Revista</h1>
 
                     <form onSubmit={store}>
-                        {/* <div className="mb-3">
-                            <label className="form-label">Codigo</label>
-                            <input
-                                type="text"
-                                value={codigo}
-                                onChange={(e) => setCodigo(e.target.value)}
-                                placeholder="Codigo del producto"
-                                className="form-control"
-                            />
-                        </div> */}
                         <div className="mb-3">
                             <label className="form-label">Nombre</label>
                             <input
                                 type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 placeholder="Nombre del producto"
                                 className="form-control"
                             />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Detalle</label>
+                            <label className="form-label">Descripcion</label>
                             <input
                                 type="text"
                                 value={description}
@@ -56,186 +105,51 @@ const Create = () => {
                                 className="form-control"
                             />
                         </div>
-                        {/* <div className="mb-3">
-                            <label className="form-label">Extra 1</label>
-                            <input
-                                type="text"
-                                value={extra1}
-                                onChange={(e) => setExtra1(e.target.value)}
-                                placeholder="Extra 1 del producto"
-                                className="form-control"
-                            />
-                        </div>
+
                         <div className="mb-3">
-                            <label className="form-label">Extra 2</label>
-                            <input
-                                type="text"
-                                value={extra2}
-                                onChange={(e) => setExtra2(e.target.value)}
-                                placeholder="Extra 2 del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Extra 3</label>
-                            <input
-                                type="text"
-                                value={extra3}
-                                onChange={(e) => setExtra3(e.target.value)}
-                                placeholder="Extra 3 del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Extra 4</label>
-                            <input
-                                type="text"
-                                value={extra4}
-                                onChange={(e) => setExtra4(e.target.value)}
-                                placeholder="Extra 4 del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Extra 5</label>
-                            <input
-                                type="text"
-                                value={extra5}
-                                onChange={(e) => setExtra5(e.target.value)}
-                                placeholder="Extra 5 del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Extra 6</label>
-                            <input
-                                type="text"
-                                value={extra6}
-                                onChange={(e) => setExtra6(e.target.value)}
-                                placeholder="Extra 6 del producto"
-                                className="form-control"
-                            />
-                        </div> */}
-                             <div className="mb-3">
                             <label className="form-label">Categoria</label>
-                            <input
-                                type="text"
+                            <select
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
-                                placeholder="Extra 3 del producto"
-                                className="form-control"
-                            />
+                                className="form-select"
+                            >
+                                <option value="">Seleccionar categoría</option>
+                                <option value="revista">Revista</option>
+                                <option value="sponsor">Sponsor</option>
+
+                            </select>
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Url de Imagen</label>
+                            <label className="form-label">Subir Imagen</label>
                             <input
-                                type="text"
-                                value={img1}
-                                onChange={(e) => setImg1(e.target.value)}
-                                placeholder="Imagen del producto"
+                                type="file"
+                                accept="image/*;capture=camera"
+                                onChange={handleUpload}
                                 className="form-control"
                             />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Url de Imagen 2</label>
-                            <input
-                                type="text"
-                                value={img2}
-                                onChange={(e) => setImg2(e.target.value)}
-                                placeholder="Imagen del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        {/* <div className="mb-3">
-                            <label className="form-label">Url de Imagen 3</label>
-                            <input
-                                type="text"
-                                value={imgUrl3}
-                                onChange={(e) => setImgUrl3(e.target.value)}
-                                placeholder="Imagen del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Url de Imagen 4</label>
-                            <input
-                                type="text"
-                                value={imgUrl4}
-                                onChange={(e) => setImgUrl4(e.target.value)}
-                                placeholder="Imagen del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Url de Imagen Pdf</label>
-                            <input
-                                type="text"
-                                value={imgUrlPdf}
-                                onChange={(e) => setImgUrlPdf(e.target.value)}
-                                placeholder="Imagen del Pdf"
-                                className="form-control"
-                            />
+                            {imgUrl && (
+                                <div>
+                                    <img src={imgUrl} alt="Preview" style={{ maxWidth: '200px', maxHeight: '200px' }} />
+                                    <button onClick={() => handleDeleteFile(imgUrl)}>Eliminar Imagen</button>
+                                </div>
+                            )}
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Pdf</label>
                             <input
-                                type="text"
-                                value={pdf}
-                                onChange={(e) => setPdf(e.target.value)}
-                                placeholder="PDF del producto"
+                                type="file"
+                                accept=".pdf"
+                                onChange={handleUploadPdf}
                                 className="form-control"
                             />
+                            {pdf && (
+                                <div>
+                                    <a href={pdf} target="_blank" rel="noopener noreferrer">Ver PDF</a>
+                                    <button onClick={() => handleDeleteFile(pdf)}>Eliminar PDF</button>
+                                </div>
+                            )}
                         </div>
-                        <div className="mb-3">
-                            <label className="form-label">Url de Video</label>
-                            <input
-                                type="text"
-                                value={videoUrl}
-                                onChange={(e) => setVideoUrl(e.target.value)}
-                                placeholder="url de Video 1"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Url de Video 2</label>
-                            <input
-                                type="text"
-                                value={videoUrl2}
-                                onChange={(e) => setVideoUrl2(e.target.value)}
-                                placeholder="url de Video 2"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Ubicacion</label>
-                            <input
-                                type="text"
-                                value={location}
-                                onChange={(e) => setLocation(e.target.value)}
-                                placeholder="Ubicacion del producto"
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="mb-3">
-                            <label className="form-label">Stock</label>
-                            <input
-                                type="text"
-                                value={stock}
-                                onChange={(e) => setStock(e.target.value)}
-                                placeholder="Stock del producto"
-                                className="form-control"
-                            />
-                        </div> */}
-                        <div className="mb-3">
-                            <label className="form-label">Precio</label>
-                            <input
-                                type="num"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
-                                placeholder="Precio del producto"
-                                className="form-control"
-                            />
-                        </div>
+
                         <button type="submit" className="btn btn-primary">Guardar</button>
                     </form>
                 </div>
@@ -244,4 +158,4 @@ const Create = () => {
     )
 }
 
-export default Create
+export default Create;

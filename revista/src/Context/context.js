@@ -5,7 +5,7 @@ import {
     signInWithEmailAndPassword,
     // sendPasswordResetEmail,
     onAuthStateChanged,
-    signInWithPopup,
+    // signInWithPopup,
     // GoogleAuthProvider,
     signOut,
     // confirmPasswordReset,
