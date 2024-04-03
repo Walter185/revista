@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Footer = styled.footer`
-    background-color: orange;
+    background-color: #2E2F81;
     width: 100%;
     margin: auto;
     padding: 20px 0;

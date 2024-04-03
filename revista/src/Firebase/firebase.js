@@ -46,7 +46,7 @@ export const uploadFile = (file, imageRef, setProgress, setRemoteImg) => {
 
 
 export async function getAllProducts(){
-    const productsRef = collection(db, "products");
+    const productsRef = collection(db, "revistas");
     const snapshot = await getDocs(productsRef);
 
     const products = snapshot.docs.map(element => {
@@ -58,32 +58,32 @@ export async function getAllProducts(){
     return products;
 }
 
-export async function getAllSponsors(){
-    const sponsorsRef = collection(db, "sponsor");
-    const snapshot = await getDocs(sponsorsRef);
+// export async function getAllSponsors(){
+//     const sponsorsRef = collection(db, "sponsor");
+//     const snapshot = await getDocs(sponsorsRef);
 
-    const sponsors = snapshot.docs.map(element => {
-        let sponsor = element.data();
-        sponsor.id = element.id;
-        return sponsor;
-    });
-    return sponsors;
-}
+//     const sponsors = snapshot.docs.map(element => {
+//         let sponsor = element.data();
+//         sponsor.id = element.id;
+//         return sponsor;
+//     });
+//     return sponsors;
+// }
 
-export async function getAllCategorias(){
-    const categoriasRef = collection(db, "Categorias");
-    const snapshot = await getDocs(categoriasRef);
+// export async function getAllCategorias(){
+//     const categoriasRef = collection(db, "Categorias");
+//     const snapshot = await getDocs(categoriasRef);
 
-    const categorias = snapshot.docs.map(element => {
-        let categoria = element.data();
-        categoria.id = element.id;
-        return categoria;
-    });
-    return categorias;
-}
+//     const categorias = snapshot.docs.map(element => {
+//         let categoria = element.data();
+//         categoria.id = element.id;
+//         return categoria;
+//     });
+//     return categorias;
+// }
 
 export async function getProductsByCategory(categoryid){
-    const productsRef = collection(db, "products");
+    const productsRef = collection(db, "revistas");
     const qry = query(productsRef, where("category", "==", categoryid));
     const snapshot = await getDocs(qry);
 
@@ -125,7 +125,7 @@ export async function getRevistas() {
   }
 //Como firebase solo tiene soporte para buscar por coincidencia 100%, decidi obtener toda la lista de productos y luego filtrar, aunque no sea lo mas eficiente.
 export async function getProductsByName(searchid){
-    const productsRef = collection(db, "products");
+    const productsRef = collection(db, "revistas");
     const snapshot = await getDocs(productsRef);
 
     let products = snapshot.docs.map(element => {
@@ -134,31 +134,31 @@ export async function getProductsByName(searchid){
         return product;
     });
 
-    products = products.filter((el)=>el.name.toLowerCase().includes(searchid.trim().toLowerCase()) || el.detail.toLowerCase().includes(searchid.trim().toLowerCase())|| el.codigo.toLowerCase().includes(searchid.trim().toLowerCase()));
+    products = products.filter((el)=>el.name.toLowerCase().includes(searchid.trim().toLowerCase()) || el.description.toLowerCase().includes(searchid.trim().toLowerCase())|| el.category.toLowerCase().includes(searchid.trim().toLowerCase()));
     return products;
 }
 
 export async function getProduct(id){
-    const productsRef = collection(db, "products");
+    const productsRef = collection(db, "revistas");
     const docRef = doc(productsRef, id)
     const snapshot = await getDoc(docRef);
 
     return { ...snapshot.data(), id: snapshot.id };
 }
 
-export async function createOrder(order){
-    const orderRef = collection(db, "orders");
+// export async function createOrder(order){
+//     const orderRef = collection(db, "orders");
 
-    let response = await addDoc(orderRef, order);
-    return response.id;
-}
+//     let response = await addDoc(orderRef, order);
+//     return response.id;
+// }
 
-export async function getOrder(id){
-    const orderRef = collection(db, "orders");
-    const docRef = doc(orderRef, id)
-    const snapshot = await getDoc(docRef);
+// export async function getOrder(id){
+//     const orderRef = collection(db, "orders");
+//     const docRef = doc(orderRef, id)
+//     const snapshot = await getDoc(docRef);
 
-    return { ...snapshot.data(), id: snapshot.id };
-}
+//     return { ...snapshot.data(), id: snapshot.id };
+// }
 
 export default db;

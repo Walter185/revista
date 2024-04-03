@@ -12,7 +12,7 @@ object-fit: fill;
 
 const Section = styled.section`
   padding-top: 1px;
-  background-color: #343a40;
+  // background-color: #343a40;
   `;
 
   const Title = styled.h4`

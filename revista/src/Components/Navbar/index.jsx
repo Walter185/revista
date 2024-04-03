@@ -7,6 +7,7 @@ import { useState } from "react";
 import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import Hamburger from "hamburger-react";
+import NavBarSearch from "./NavBarSearch";
 
 
 const Li = styled.li`
@@ -66,8 +67,7 @@ const Navbar = () => {
       <div className="navbar__logo">
         <img src={logo} alt="Logo" />
       </div>
-      <div className="navbar__search">
-      </div>
+      <NavBarSearch />
       <div>
         <Ul className={isOpen ? "open" : ""}>
           <Li>

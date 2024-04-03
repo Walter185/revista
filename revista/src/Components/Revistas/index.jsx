@@ -8,7 +8,7 @@ import { getRevistas } from '../../Firebase/firebase.js';
 const Section = styled.section`
   padding-top: 10px;
   // margin-top: 30px;
-  background-color: #343a40;
+  // background-color: #343a40;
   `;
 
 const Title = styled.h4`
@@ -27,7 +27,7 @@ const MachineContainer = styled.div`
 
 const MachineCard = styled.div`
   position: relative;
-  width: 20%;
+  width: 17%;
   margin: 20px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -67,7 +67,7 @@ const ModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  // background-color: rgba(0, 0, 0, 0.7);
 `;
 
 const ModalContent = styled.div`
@@ -76,7 +76,7 @@ const ModalContent = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;

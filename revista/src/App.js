@@ -11,6 +11,7 @@ import Show from './Components/Admin/Show';
 import Edit from './Components/Admin/Edit';
 import Create from './Components/Admin/Create';
 import RequireAuth from './Components/Login/RequireAuth';
+import ItemListContainer from './Components/ItemListContainer';
 
 
 const config = {
@@ -33,6 +34,8 @@ function App(props)  {
               <Routes >
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/login" element={<Loginpage />} />
+                  <Route path="/category/:categoryid" element={<ItemListContainer />} />
+                  <Route path="/search/:searchid" element={<ItemListContainer />} />
                   <Route path="/show" element={<RequireAuth><Show /></RequireAuth>} />
                   <Route path="/create" element={<RequireAuth><Create /></RequireAuth>} />
                   <Route path="/edit/:id" element={<RequireAuth><Edit /></RequireAuth>} />
