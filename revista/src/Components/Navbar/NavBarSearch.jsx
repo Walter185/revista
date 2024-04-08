@@ -29,7 +29,7 @@ export default function NavBarSearch(){
                 type="search" 
                 name="userInput" 
                 value={userInput} 
-                placeholder="search" 
+                placeholder="Ingrese su búsqueda..." 
                 onChange={handleChange}/>
         </Form>
     );

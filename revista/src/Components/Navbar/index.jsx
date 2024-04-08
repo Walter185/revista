@@ -1,4 +1,4 @@
-import logo from "../../Assets/Img/logo.jpg"
+import logo from "../../Assets/Img/logo.png";
 import "./Navbar.css"
 import { useAuth } from '../../Context/context';
 import styled from "styled-components";
