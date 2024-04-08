@@ -8,6 +8,7 @@ import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import Hamburger from "hamburger-react";
 import NavBarSearch from "./NavBarSearch";
+import { Link } from "react-router-dom";
 
 
 const Li = styled.li`
@@ -55,6 +56,19 @@ const Pan = styled.div`
   display: flex;
   }
 `;
+const Nav = styled.div`
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #2E2F81;
+color: #fff;
+height: 90px;
+text-decoration: none;
+position: sticky;
+top: 0;
+z-index: 1;
+`;
+
 
 const Navbar = () => {
   const { logout, currentUser } = useAuth();
@@ -63,10 +77,10 @@ const Navbar = () => {
 
 
   return (
-    <nav className="navbar">
-      <div className="navbar__logo">
+    <Nav>
+      <Link to="/" className="navbar__logo">
         <img src={logo} alt="Logo" />
-      </div>
+      </Link>
       <NavBarSearch />
       <div>
         <Ul className={isOpen ? "open" : ""}>
@@ -102,7 +116,7 @@ const Navbar = () => {
           <Hamburger name="Hamburguesa" toggled={isOpen} toggle={setIsOpen} duration={0.8} color="coral" />
         </Pan>
       </div>
-    </nav>
+    </Nav>
   );
 };
 
