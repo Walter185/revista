@@ -1,0 +1,24 @@
+.contenedor{
+    padding-bottom: 275px;
+}
+.description {
+    margin: 30px;
+}
+body {
+    font-family: sans-serif;
+  }
+  
+  .react-pdf__Document {
+    margin-left: 20px;
+    height: 100%;  
+    width: 200%;
+  }
+  
+  .react-pdf__Page {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .react-pdf__PdfPage {
+    width: 100%;
+  }

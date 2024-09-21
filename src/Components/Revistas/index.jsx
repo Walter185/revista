@@ -130,8 +130,8 @@ export default function Revistas() {
               </div>
           
             </Carousel>
-            <MachineDescription>{revista.description}</MachineDescription>
-            <br />
+            {/* <MachineDescription>{revista.description}</MachineDescription> */}
+            <br /><br />
             <FichaTecnicaButton to={`/PDFViewer/${revista.id}`} className="btn btn-outline-primary">Ver Revista</FichaTecnicaButton>
             {/* <FichaTecnicaButton to={revista.pdf} target="_blank" rel="noreferrer"className="btn btn-outline-primary">Ver PDF</FichaTecnicaButton> */}
           </MachineCard>
