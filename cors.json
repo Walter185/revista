@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["http://localhost:3000"],
+      "origin": ["https://agro-revista.web.app"],
       "method": ["GET", "HEAD", "OPTIONS"],
       "responseHeader": ["Content-Type"],
       "maxAgeSeconds": 3600
