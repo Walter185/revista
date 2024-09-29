@@ -1,24 +1,46 @@
-.contenedor{
-    padding-bottom: 275px;
+/* PDFViewer.css */
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
+
 .description {
-    margin: 30px;
+  margin-bottom: 10px;
+  text-align: center;
 }
-body {
-    font-family: sans-serif;
-  }
-  
-  .react-pdf__Document {
-    margin-left: 20px;
-    height: 100%;  
-    width: 200%;
-  }
-  
-  .react-pdf__Page {
-    display: inline-flex;
-    width: 100%;
+
+@media (max-width: 768px) {
+  /* Estilos para dispositivos móviles */
+  .contenedor {
+    padding: 10px;
   }
 
-  .react-pdf__PdfPage {
-    width: 100%;
+  .description {
+    font-size: 14px;
   }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  /* Estilos para tablets */
+  .contenedor {
+    padding: 15px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1201px) {
+  /* Estilos para desktops */
+  .contenedor {
+    padding: 20px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+}
